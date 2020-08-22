@@ -19,6 +19,8 @@ func main() {
 	normalPage := func(w http.ResponseWriter, req *http.Request) {
 
 		req.Host = req.URL.Host
+
+		// direct to contents.htm page for root path
 		if req.RequestURI == "/" && req.URL.Path == "/" {
 			req.RequestURI = "/contents.htm"
 			req.URL.Path = "/contents.htm"
@@ -26,7 +28,10 @@ func main() {
 		proxy.ServeHTTP(w, req)
 
 	}
+
 	warningPage := func(w http.ResponseWriter, req *http.Request) {
+		// custom page for Chapter 8 request
+		// getting client's IP address from req.RemoteAddr
 		io.WriteString(w, "\t\t********* WARNING ********* \n")
 		io.WriteString(w, "\tHey! YOU! \n")
 		io.WriteString(w, "\tPerpetrator From IP: "+req.RemoteAddr+"\n")
